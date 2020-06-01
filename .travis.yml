@@ -40,8 +40,7 @@ env:
 
 branches:
   only:
-  - master
-  - ariane-dev
+  - sv2v
 
 before_install:
   - export CXX=g++-7 CC=gcc-7
