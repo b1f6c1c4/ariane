@@ -59,6 +59,7 @@ before_install:
   - ci/make-tmp.sh
   - curl -fsSL https://raw.githubusercontent.com/b1f6c1c4/git-get/master/git-get | sudo tee /usr/bin/git-get > /dev/null && sudo chmod 755 /usr/bin/git-get
   - curl -fsSL https://raw.githubusercontent.com/b1f6c1c4/git-get/master/git-gets | sudo tee /usr/bin/git-gets > /dev/null && sudo chmod 755 /usr/bin/git-gets
+  - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
 
 stages:
   - checkout
@@ -77,12 +78,10 @@ jobs:
       script:
         - curl -sSL https://get.haskellstack.org/ | sh
         - make -C /home/travis/sv2v
-        - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
         - sv2v --version
     - stage: compile2
       name: run sv2v
       script:
-        - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
         - ./sv2v.sh
     - stage: checkout
       name: checkout gcc
