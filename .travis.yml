@@ -34,7 +34,7 @@ addons:
       - default-jdk
       - zlib1g-dev
       - valgrind
-      - libgmp
+      - libgmp-dev
 env:
   global:
     - RISCV="/home/travis/riscv_install"
@@ -59,8 +59,6 @@ before_install:
   - git submodule update --init --recursive
 
 stages:
-  - sv2v1
-  - sv2v2
   - checkout
   - compile1
   - compile2
@@ -68,14 +66,17 @@ stages:
 
 jobs:
   include:
-    - stage: sv2v1
-      name: build sv2v
+    - stage: checkout
+      name: get sv2v
       script:
         - curl -sSL https://get.haskellstack.org/ | sh
         - git clone --depth=1 https://github.com/zachjs/sv2v /home/travis/sv2v
+    - stage: compile1
+      name: build sv2v
+      script:
         - make -C /home/travis/sv2v
         - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
-    - stage: sv2v2
+    - stage: compile2
       name: run sv2v
       script:
         - ./sv2v.sh
