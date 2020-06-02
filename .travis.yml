@@ -71,7 +71,7 @@ jobs:
     - stage: checkout
       name: get sv2v
       script:
-        - [ ! -x /home/travis/sv2v/bin/sv2v ] && git get -g -o /home/travis/sv2v --rm-rf https://github.com/zachjs/sv2v
+        - ci/get-sv2v.sh
     - stage: compile1
       name: build sv2v
       script:
@@ -82,13 +82,12 @@ jobs:
     - stage: compile2
       name: run sv2v
       script:
+        - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
         - ./sv2v.sh
     - stage: checkout
       name: checkout gcc
       script:
-        - mkdir -p /home/travis/x-tools/
-        - [ ! -d /home/travis/x-tools/riscv64-unknown-elf ] && (curl -fsSL http://b1f6c1c4.info/rv64.tar | tar -C /home/travis/x-tools/ -xv)
-        - ln -s /home/travis/x-tools/riscv64-unknown-elf tmp/ricsv-gnu-toolchain
+        - ci/build-riscv-gcc.sh
     - stage: compile2
       name: build tools
       script:
