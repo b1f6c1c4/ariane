@@ -6,6 +6,7 @@ cache:
   directories:
     $RISCV
     $VERILATOR_ROOT
+    /home/travis/.stack
   timeout: 1000
 
 # required packages to install
@@ -33,10 +34,12 @@ addons:
       - default-jdk
       - zlib1g-dev
       - valgrind
+      - libgmp
 env:
   global:
     - RISCV="/home/travis/riscv_install"
     - VERILATOR_ROOT="/home/travis/verilator-4.014/"
+    - verilator="verilator sv2v-result.v"
 
 branches:
   only:
@@ -56,6 +59,8 @@ before_install:
   - git submodule update --init --recursive
 
 stages:
+  - sv2v1
+  - sv2v2
   - checkout
   - compile1
   - compile2
@@ -63,6 +68,17 @@ stages:
 
 jobs:
   include:
+    - stage: sv2v1
+      name: build sv2v
+      script:
+        - curl -sSL https://get.haskellstack.org/ | sh
+        - git clone --depth=1 https://github.com/zachjs/sv2v /home/travis/sv2v
+        - make -C /home/travis/sv2v
+        - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
+    - stage: sv2v2
+      name: run sv2v
+      script:
+        - ./sv2v.sh
     - stage: checkout
       name: checkout gcc
       script:
