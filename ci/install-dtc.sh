@@ -11,9 +11,8 @@ fi
 
 if [ ! -e "$RISCV/bin/dtc" ]; then
     echo "Installing DTC"
-    git clone https://git.kernel.org/pub/scm/utils/dtc/dtc.git
+    git get https://git.kernel.org/pub/scm/utils/dtc/dtc.git $VERSION
     cd dtc
-    git checkout $VERSION
     make -j${NUM_JOBS} PREFIX=$RISCV/ NO_PYTHON=1
     make -j${NUM_JOBS} check NO_PYTHON=1
     make -j${NUM_JOBS} install PREFIX=$RISCV/ NO_PYTHON=1

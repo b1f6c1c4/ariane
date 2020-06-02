@@ -11,9 +11,8 @@ fi
 
 if [ ! -e "${RISCV}/lib/libfesvr.so"  ]; then
     echo "Installing RISCV FESVR"
-    git clone https://github.com/riscv/riscv-fesvr.git
+    git get https://github.com/riscv/riscv-fesvr.git $VERSION
     cd riscv-fesvr
-    git checkout $VERSION
     mkdir -p build
     cd build
     ../configure --prefix="$RISCV/"

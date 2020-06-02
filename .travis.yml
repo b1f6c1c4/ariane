@@ -1,6 +1,5 @@
 language: cpp
 # run on new infrastructure
-sudo: false
 cache:
   apt: true
   directories:
@@ -56,7 +55,8 @@ before_install:
   # number of parallel jobs to use for make commands and simulation
   - export NUM_JOBS=4
   - ci/make-tmp.sh
-  - git submodule update --init --recursive
+  - curl -fsSL https://raw.githubusercontent.com/b1f6c1c4/git-get/master/git-get | sudo tee /usr/bin/git-get > /dev/null && sudo chmod 755 /usr/bin/git-get
+  - curl -fsSL https://raw.githubusercontent.com/b1f6c1c4/git-get/master/git-gets | sudo tee /usr/bin/git-gets > /dev/null && sudo chmod 755 /usr/bin/git-gets
 
 stages:
   - checkout
@@ -67,10 +67,14 @@ stages:
 jobs:
   include:
     - stage: checkout
+      name: get submodules
+      script:
+        - git gets -P
+    - stage: checkout
       name: get sv2v
       script:
         - curl -sSL https://get.haskellstack.org/ | sh
-        - git clone --depth=1 https://github.com/zachjs/sv2v /home/travis/sv2v
+        - git get -o /home/travis/sv2v https://github.com/zachjs/sv2v
     - stage: compile1
       name: build sv2v
       script:

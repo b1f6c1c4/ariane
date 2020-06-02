@@ -16,12 +16,11 @@ fi
 
 if ! [ -e $RISCV/bin ]; then
     if ! [ -e $RISCV/riscv-gnu-toolchain ]; then
-        git clone https://github.com/riscv/riscv-gnu-toolchain.git
+        git gets -P --flat -o $RISCV/riscv-gnu-toolchain \
+           https://github.com/riscv/riscv-gnu-toolchain.git $VERSION
     fi
 
     cd riscv-gnu-toolchain
-    git checkout $VERSION
-    git submodule update --init --recursive
 
     if [[ $1 -ne "0" || -z ${1} ]]; then
       echo "Compiling RISC-V Toolchain"

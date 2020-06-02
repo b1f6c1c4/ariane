@@ -11,9 +11,8 @@ fi
 
 if [ ! -e "${RISCV}/bin/spike"  ]; then
     echo "Installing Spike"
-    git clone https://github.com/riscv/riscv-isa-sim.git 
+    git get https://github.com/riscv/riscv-isa-sim.git $VERSION
     cd riscv-isa-sim
-    git checkout $VERSION
     mkdir -p build
     cd build
     ../configure --prefix="$RISCV/"
