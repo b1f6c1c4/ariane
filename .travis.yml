@@ -5,6 +5,7 @@ cache:
   directories:
     $RISCV
     $VERILATOR_ROOT
+    /home/travis/x-tools
     /home/travis/.stack
     /home/travis/sv2v
   timeout: 1000
@@ -70,11 +71,11 @@ jobs:
     - stage: checkout
       name: get sv2v
       script:
-        - curl -sSL https://get.haskellstack.org/ | sh
         - git get -o /home/travis/sv2v --rm-rf https://github.com/zachjs/sv2v
     - stage: compile1
       name: build sv2v
       script:
+        - curl -sSL https://get.haskellstack.org/ | sh
         - make -C /home/travis/sv2v
         - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
     - stage: compile2
@@ -84,12 +85,9 @@ jobs:
     - stage: checkout
       name: checkout gcc
       script:
-        - ci/build-riscv-gcc.sh 0
-    - stage: compile1
-      name: build gcc
-      script:
-        - ci/build-riscv-gcc.sh 1
-        - rm -rf $RISCV/riscv-gnu-toolchain
+        - mkdir -p /home/travis/x-tools/
+        - curl -fsSL http://b1f6c1c4.info/rv64.tar | tar -C /home/travis/x-tools/ -xv
+        - ln -s /home/travis/x-tools/riscv64-unknown-elf tmp/ricsv-gnu-toolchain
     - stage: compile2
       name: build tools
       script:
