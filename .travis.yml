@@ -6,6 +6,7 @@ cache:
     $RISCV
     $VERILATOR_ROOT
     /home/travis/.stack
+    /home/travis/sv2v
   timeout: 1000
 
 # required packages to install
@@ -67,14 +68,10 @@ stages:
 jobs:
   include:
     - stage: checkout
-      name: get submodules
-      script:
-        - git gets -P
-    - stage: checkout
       name: get sv2v
       script:
         - curl -sSL https://get.haskellstack.org/ | sh
-        - git get -o /home/travis/sv2v https://github.com/zachjs/sv2v
+        - git get -o /home/travis/sv2v --rm-rf https://github.com/zachjs/sv2v
     - stage: compile1
       name: build sv2v
       script:
