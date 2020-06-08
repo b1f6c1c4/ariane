@@ -62,34 +62,23 @@ before_install:
   - sudo ln -s /home/travis/sv2v/bin/sv2v /usr/bin/sv2v
 
 stages:
-  - checkout
-  - compile1
-  - compile2
+  - compile
   - test
 
 jobs:
   include:
-    - stage: checkout
-      name: get sv2v
+    - stage: compile
+      name: get, build, and run sv2v
       script:
         - ci/get-sv2v.sh
-    - stage: compile1
-      name: build sv2v
-      script:
         - curl -sSL https://get.haskellstack.org/ | sh
         - make -C /home/travis/sv2v
         - sv2v --version
-    - stage: compile2
-      name: run sv2v
-      script:
         - ./sv2v.sh
-    - stage: checkout
-      name: checkout gcc
+    - stage: compile
+      name: checkout gcc and build tools
       script:
         - ci/build-riscv-gcc.sh
-    - stage: compile2
-      name: build tools
-      script:
         - ci/install-fesvr.sh
         - ci/install-verilator.sh
         - ci/install-dtc.sh
