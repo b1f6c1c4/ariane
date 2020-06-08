@@ -70,10 +70,10 @@ jobs:
     - stage: compile
       name: get, build, and run sv2v
       script:
-        - ci/get-sv2v.sh
         - curl -sSL https://get.haskellstack.org/ | sh
-        - make -C /home/travis/sv2v
+        - ci/get-sv2v.sh
         - sv2v --version
+        - wget https://raw.githubusercontent.com/pulp-platform/apb/v0.1.0/src/apb_intf.sv
         - ./sv2v.sh
     - stage: compile
       name: checkout gcc and build tools

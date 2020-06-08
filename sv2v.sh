@@ -4,6 +4,9 @@ set -euxo pipefail
 
 FILES=()
 
+# The never spoken missing file
+FILES+=("apb_intf.sv")
+
 # $(ariane_pkg) in Makefile
 FILES+=("include/riscv_pkg.sv")
 FILES+=("src/riscv-dbg/src/dm_pkg.sv")
