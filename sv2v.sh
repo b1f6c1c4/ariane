@@ -203,6 +203,7 @@ sv2v \
     -I src/axi_node \
     -I src/common_cells/include/ \
     -D WT_DCACHE \
+    -D VERILATOR \
     "${FILES[@]}" >sv2v-result.v
 
 I=0
