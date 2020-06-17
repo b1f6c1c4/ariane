@@ -3,7 +3,6 @@ language: cpp
 cache:
   apt: true
   directories:
-    $RISCV
     $VERILATOR_ROOT
     /home/travis/x-tools
     /home/travis/.stack
@@ -38,9 +37,9 @@ addons:
       - libgmp-dev
 env:
   global:
-    - RISCV="/home/travis/riscv_install"
+    - RISCV="/home/travis/x-tools/riscv64-unknown-elf"
     - VERILATOR_ROOT="/home/travis/verilator-4.014/"
-    - verilator="verilator sv2v-result.v"
+    - verilator="verilator /home/travis/sv2v/sv2v-result.v"
 
 branches:
   only:
@@ -75,6 +74,7 @@ jobs:
         - sv2v --version
         - wget https://raw.githubusercontent.com/pulp-platform/apb/v0.1.0/src/apb_intf.sv
         - ./sv2v.sh
+        - mv ./sv2v-result.v /home/travis/sv2v/sv2v-result.v
     - stage: compile
       name: checkout gcc and build tools
       script:
