@@ -7,7 +7,7 @@ if [ ! -x ~/sv2v/bin/sv2v ]; then
     make -C ~/sv2v
 fi
 
-git -C ~/sv2v fetch origin master:FETCH_HEAD
+git -C ~/sv2v fetch --force origin master:FETCH_HEAD
 
 if [ ! "$(git -C ~/sv2v rev-parse HEAD)" = "$(git -C ~/sv2v rev-parse FETCH_HEAD)" ]; then
     git -C ~/sv2v reset --hard FETCH_HEAD
