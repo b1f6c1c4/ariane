@@ -202,15 +202,20 @@ FILES+=("src/tech_cells_generic/src/pulp_clock_mux2.sv")
 FILES+=("src/util/sram.sv")
 # FILES+=("tb/common/mock_uart.sv")
 
-sv2v \
-    -I src/axi_node \
-    -I src/common_cells/include/ \
-    -D WT_DCACHE \
-    -D VERILATOR \
-    "${FILES[@]}" >sv2v-result.v
-
-I=0
-while [ "$I" -lt "${#FILES[@]}" ]; do
-    truncate -s 0 "${FILES[$I]}"
-    I="$((I+1))"
-done
+if [ "$(basename "$0")" = "sv2v.sh" ]; then
+    sv2v \
+        -I src/axi_node \
+        -I src/common_cells/include/ \
+        -D WT_DCACHE \
+        -D VERILATOR \
+        "${FILES[@]}" >sv2v-result.v
+elif [ "$(basename "$0")" = "sv2v-cleanup.sh" ]; then
+    I=0
+    while [ "$I" -lt "${#FILES[@]}" ]; do
+        truncate -s 0 "${FILES[$I]}"
+        I="$((I+1))"
+    done
+else
+    echo 'Unknown $0:'
+    printf '%s\n' "$0" "$@"
+fi

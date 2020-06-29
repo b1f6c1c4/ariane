@@ -74,7 +74,8 @@ jobs:
         - sv2v --version
         - wget https://raw.githubusercontent.com/pulp-platform/apb/v0.1.0/src/apb_intf.sv
         - ./sv2v.sh
-        - mv ./sv2v-result.v /home/travis/sv2v/sv2v-result.v
+        - mv -f ./sv2v-result.v /home/travis/sv2v/sv2v-result.v
+        - mv -f ./sv2v.sh /home/travis/sv2v/sv2v-cleanup.sh
     - stage: compile
       name: checkout gcc and build tools
       script:
@@ -87,6 +88,7 @@ jobs:
     - stage: test
       name: run riscv benchmarks (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-benchmarks-verilator defines=WB_DCACHE
 
@@ -95,35 +97,41 @@ jobs:
     - stage: test
       name: run asm tests1 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests1-verilator defines=WB_DCACHE
 
     - stage: test
       name: run asm tests2 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests2-verilator defines=WB_DCACHE
     # rv64ui-p-* tests
     - stage: test
       name: run asm tests3 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests3-verilator defines=WB_DCACHE
     - stage: test
       name: run asm tests4 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests4-verilator defines=WB_DCACHE
     # rv64mi-p-* tests
     - stage: test
       name: run asm tests5 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests5-verilator defines=WB_DCACHE
     # rv64-* other tests
     - stage: test
       name: run asm tests6 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests6-verilator defines=WB_DCACHE
 
@@ -131,6 +139,7 @@ jobs:
     - stage: test
       name: run mul tests (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-mul-verilator defines=WB_DCACHE
 
@@ -138,6 +147,7 @@ jobs:
     - stage: test
       name: run fp64 tests (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-fp-d-verilator defines=WB_DCACHE
 
@@ -145,6 +155,7 @@ jobs:
     - stage: test
       name: run fp32 tests (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-fp-f-verilator defines=WB_DCACHE
 
@@ -153,23 +164,27 @@ jobs:
     - stage: test
       name: run amo tests1 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - travis_wait 60 make -j${NUM_JOBS} run-amo-tests1-verilator defines=WB_DCACHE
     - stage: test
       name: run amo tests2 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - travis_wait 60 make -j${NUM_JOBS} run-amo-tests2-verilator defines=WB_DCACHE
      # rv64ua-p-* tests
     - stage: test
       name: run amo tests3 (Write-Back Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-amo-tests3-verilator defines=WB_DCACHE
 
     - stage: test
       name: run riscv benchmarks (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-benchmarks-verilator  defines=WT_DCACHE
 
@@ -178,35 +193,41 @@ jobs:
     - stage: test
       name: run asm tests1 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests1-verilator defines=WT_DCACHE
 
     - stage: test
       name: run asm tests2 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests2-verilator defines=WT_DCACHE
     # rv64ui-p-* tests
     - stage: test
       name: run asm tests3 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests3-verilator defines=WT_DCACHE
     - stage: test
       name: run asm tests4 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests4-verilator defines=WT_DCACHE
     # rv64mi-p-* tests
     - stage: test
       name: run asm tests5 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests5-verilator defines=WT_DCACHE
     # rv64-* other tests
     - stage: test
       name: run asm tests6 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-asm-tests6-verilator defines=WT_DCACHE
 
@@ -214,6 +235,7 @@ jobs:
     - stage: test
       name: run mul tests (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-mul-verilator defines=WT_DCACHE
 
@@ -221,6 +243,7 @@ jobs:
     - stage: test
       name: run fp64 tests (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-fp-d-verilator defines=WT_DCACHE
 
@@ -228,6 +251,7 @@ jobs:
     - stage: test
       name: run fp32 tests (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-fp-f-verilator defines=WT_DCACHE
 
@@ -236,17 +260,20 @@ jobs:
     - stage: test
       name: run amo tests1 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-amo-tests1-verilator defines=WT_DCACHE
     - stage: test
       name: run amo tests2 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-amo-tests2-verilator defines=WT_DCACHE
      # rv64ua-p-* tests
     - stage: test
       name: run amo tests3 (Write-through Cache)
       script:
+        - /home/travis/sv2v/sv2v-cleanup.sh
         - ci/build-riscv-tests.sh
         - make -j${NUM_JOBS} run-amo-tests3-verilator defines=WT_DCACHE
 
