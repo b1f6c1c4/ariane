@@ -39,7 +39,7 @@ env:
   global:
     - RISCV="/home/travis/x-tools/riscv64-unknown-elf"
     - VERILATOR_ROOT="/home/travis/verilator-4.014/"
-    - verilator="verilator /home/travis/sv2v/sv2v-result.v"
+    - verilator="verilator --error-limit 1000 /home/travis/sv2v/sv2v-result.v"
 
 branches:
   only:
